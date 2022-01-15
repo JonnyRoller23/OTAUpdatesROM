@@ -1,12 +1,12 @@
 {
   "response": [
     {
-      "datetime": "1234567890",
-      "filename": "lineage-18.1-20211231-UNOFFICIAL-olives.zip",
-      "id": "e343124234441244123",
+      "datetime": "1642265107",
+      "filename": "lineage-18.1-20220115-UNOFFICIAL-olives.zip",
+      "id": "5b736a491c67c0d04a8f696fff040468",
       "romtype": "UNOFFICIAL",
-      "size": "123456789",
-      "url":  "https://github.com/JonnyRoller23/OTAUpdates/releases/download/olives-20211231-1113/lineage-18.1-20211231-UNOFFICIAL-olives.zip",
+      "size": "834088449",
+      "url":  "https://github.com/JonnyRoller23/OTAUpdatesROM/releases/download/olives-20220115-1811/LineageOS-Mods-18.1-20220115-UNOFFICIAL-olives.zip",
       "version": "18.1"
     }
   ]
