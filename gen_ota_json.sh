@@ -9,14 +9,14 @@ if [ ! -z "$2" ]; then
 d=$2
 fi
 
-FILENAME=lineage-18.1-"${d}"-UNOFFICIAL-"${DEVICE}".zip
+FILENAME=LineageOS-Mods-18.1-"${d}"-UNOFFICIAL-"${DEVICE}".zip
 
 oldd=$(grep filename $DEVICE.json | cut -d '-' -f 3)
-md5=$(md5sum ~/lineageos/out/target/product/$DEVICE/$FILENAME | cut -d ' ' -f 1)
+md5=$(md5sum /home/jenkins/workspace/LineageOS-18.1-olives/out/target/product/$DEVICE/$FILENAME | cut -d ' ' -f 1)
 oldmd5=$(grep '"id"' $DEVICE.json | cut -d':' -f 2)
-utc=$(grep ro.build.date.utc ~/lineageos/out/target/product/$DEVICE/system/build.prop | cut -d '=' -f 2)
+utc=$(grep ro.build.date.utc /home/jenkins/workspace/LineageOS-18.1-olives/out/target/product/$DEVICE/system/build.prop | cut -d '=' -f 2)
 oldutc=$(grep datetime $DEVICE.json | cut -d ':' -f 2)
-size=$(wc -c ~/lineageos/out/target/product/$DEVICE/$FILENAME | cut -d ' ' -f 1)
+size=$(wc -c /home/jenkins/workspace/LineageOS-18.1-olives/out/target/product/$DEVICE/$FILENAME | cut -d ' ' -f 1)
 oldsize=$(grep size $DEVICE.json | cut -d ':' -f 2)
 oldurl=$(grep url $DEVICE.json | cut -d ' ' -f 9)
 oldtag=$(grep url $DEVICE.json | cut -d '/' -f 8)
@@ -29,7 +29,7 @@ sed -i "s!${oldsize}! \"${size}\",!g" $DEVICE.json
 d2=$(date +%Y%m%d-%H%M)
 
 TAG=$(echo "${DEVICE}-${d2}")
-url="https://github.com/meizucustoms/OTAUpdates/releases/download/${TAG}/${FILENAME}"
+url="https://github.com/JonnyRoller23/OTAUpdatesROM/releases/download/${TAG}/${FILENAME}"
 sed -i "s!${oldurl}!\"${url}\",!g" $DEVICE.json
 
 # Replace tag before date and after URL
@@ -38,12 +38,12 @@ sed -i "s!${oldtag}!${TAG}!" $DEVICE.json
 sed -i "s!${oldd}!${d}!" $DEVICE.json
 
 echo "Write some release notes..."
-echo -e "New update - ${TAG}\n--------------------------------\n" > ~/Lineage-OTA/release_notes.txt
-code -n -w ~/Lineage-OTA/release_notes.txt
+echo -e "New update - ${TAG}\n--------------------------------\n" > ~/OTAUpdatesROM/changelog.txt
+nano ~/OTAUpdatesROM/changelog.txt
 
 echo "Creating new release..."
 
-gh release create ${TAG} --title ${TAG} -F ~/Lineage-OTA/release_notes.txt ~/lineageos/out/target/product/${DEVICE}/${FILENAME}
+gh release create ${TAG} --title ${TAG} -F ~/OTAUpdatesROM/changelog.txt /home/jenkins/workspace/LineageOS-18.1-olives/out/target/product/${DEVICE}/${FILENAME}
 else
 echo "! onlyjson mode"
 TAG="$(gh release list | grep Latest | sed 's/.*Latest.//g;s/202[0-9]\-.*//g;s/[[:space:]]//g')"
